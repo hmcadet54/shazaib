@@ -12,7 +12,7 @@ export const Dashboard = () => {
   const getdata = async () => {
     try {
       const id = localStorage.getItem("id");
-      const response = await fetch(`https://authapi-production-4e0d.up.railway.app/getuser/${id}`);
+      const response = await fetch(`https://shazaib-back-1.onrender.com/getuser/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
       }
@@ -28,6 +28,9 @@ export const Dashboard = () => {
     localStorage.removeItem("id");
     Navigate("/");
   }
+  const handlescene = () => {
+    Navigate("/info");
+  }
 
   useEffect(() => {
     getdata();
@@ -39,6 +42,8 @@ export const Dashboard = () => {
     <>
       <ProfileCard info={info}/>
       <a href="" onClick={handleLogout}>logout?</a>
+      <br />
+      <a href="" onClick={handlescene}>submit a scene</a>
     </>
   );
 };

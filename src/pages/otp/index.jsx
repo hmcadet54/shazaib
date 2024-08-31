@@ -23,7 +23,7 @@ export const Otp = () => {
       email: email,
     };
 
-    const apiurl = "https://authapi-production-4e0d.up.railway.app/verifyOTP";
+    const apiurl = "https://shazaib-back-1.onrender.com/verifyOTP";
 
     try {
       setLoading(true);

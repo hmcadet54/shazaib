@@ -1,37 +1,149 @@
-import React, { useState } from 'react';
-// import { Alert, AlertDescription } from '@/components/ui/alert';
+import React, { useState, useEffect, useCallback } from 'react';
+import Loader from "../../components/Loader/Loader";
 import './style.css';
 
 export const CrimeReportForm = () => {
-  const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
-  const [crimeType, setCrimeType] = useState('');
-  const [description, setDescription] = useState('');
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    location: '',
+    crimeType: '',
+    description: '',
+  });
   const [file, setFile] = useState(null);
   const [error, setError] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [fileURL, setFileURL] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Here you would typically send the form data to a server
-    console.log({ name, location, crimeType, description, file });
-    // Reset form after submission
-    setName('');
-    setLocation('');
-    setCrimeType('');
-    setDescription('');
-    setFile(null);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
-  const handleFileChange = (e) => {
+  const getdata = async () => {
+    try {
+      const id = localStorage.getItem("id");
+      const response = await fetch(`https://shazaib-back-1.onrender.com/getuser/${id}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch user data");
+      }
+      const data = await response.json();
+      setFormData(prevData => ({ ...prevData, email: data.email }));
+      console.log('User data fetched:', data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
-      if (['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'].includes(selectedFile.type)) {
+      const validTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/png'];
+      if (validTypes.includes(selectedFile.type)) {
         setFile(selectedFile);
         setError('');
+        await uploadFile(selectedFile);
       } else {
         setError('Please upload a PDF, DOC, or image file.');
         setFile(null);
       }
+    }
+  };
+
+  const uploadFile = async (file) => {
+    setIsUploading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch('https://shazaib-back-1.onrender.com/fileupload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('File upload failed');
+      }
+
+      const data = await response.json();
+      setFileURL(data.data.url);
+    } catch (error) {
+      console.error('File upload error:', error);
+      setError('File upload failed. Please try again.');
+      setFile(null);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const submitForm = useCallback(async () => {
+    try {
+      const response = await fetch('https://shazaib-back-1.onrender.com/submitcrime', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email, // Explicitly include the email
+          location: formData.location,
+          crimeType: formData.crimeType,
+          description: formData.description,
+          fileURL
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit crime report');
+      }
+
+      const result = await response.json();
+      console.log('Submission response:', result);
+
+      setFormData({
+        name: '',
+        email: formData.email, // Preserve the email
+        location: '',
+        crimeType: '',
+        description: '',
+      });
+      setFile(null);
+      setFileURL('');
+      setError('');
+      setSuccessMessage('Crime report submitted successfully!');
+    } catch (error) {
+      console.error('Submission error:', error);
+      setError('Failed to submit crime report. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  }, [formData, fileURL]);
+
+  useEffect(() => {
+    getdata();
+  }, []);
+
+  useEffect(() => {
+    if (fileURL && isSubmitting) {
+      submitForm();
+    }
+  }, [fileURL, isSubmitting, submitForm]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError('');
+    setSuccessMessage('');
+
+    if (!formData.name || !formData.email || !formData.location || !formData.crimeType || !formData.description) {
+      setError('Please fill in all required fields.');
+      return;
+    }
+
+    setIsSubmitting(true);
+    if (!file) {
+      submitForm();
     }
   };
 
@@ -40,22 +152,43 @@ export const CrimeReportForm = () => {
       <div className="page2">
         <div className="loginform">
           <h2>Crime Report Form</h2>
+          {successMessage && <div className="success-message" role="alert">{successMessage}</div>}
+          {error && <div className="error-message" role="alert">{error}</div>}
           <form onSubmit={handleSubmit}>
             <div className="inputfield">
-              <p>Name</p>
+              <label htmlFor="name">Name</label>
               <input
+                id="name"
                 type="text"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
                 required
+                aria-required="true"
               />
             </div>
             <div className="inputfield">
-              <p>Location</p>
-              <select
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
+              <label htmlFor="email">Email</label>
+              <input
+                id="email"
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleInputChange}
                 required
+                aria-required="true"
+                readOnly
+              />
+            </div>
+            <div className="inputfield">
+              <label htmlFor="location">Location</label>
+              <select
+                id="location"
+                name="location"
+                value={formData.location}
+                onChange={handleInputChange}
+                required
+                aria-required="true"
               >
                 <option value="">Select a location</option>
                 <option value="location1">Location 1</option>
@@ -64,11 +197,14 @@ export const CrimeReportForm = () => {
               </select>
             </div>
             <div className="inputfield">
-              <p>Crime Type</p>
+              <label htmlFor="crimeType">Crime Type</label>
               <select
-                value={crimeType}
-                onChange={(e) => setCrimeType(e.target.value)}
+                id="crimeType"
+                name="crimeType"
+                value={formData.crimeType}
+                onChange={handleInputChange}
                 required
+                aria-required="true"
               >
                 <option value="">Select crime type</option>
                 <option value="theft">Theft</option>
@@ -78,28 +214,42 @@ export const CrimeReportForm = () => {
               </select>
             </div>
             <div className="inputfield">
-              <p>Brief Information</p>
+              <label htmlFor="description">Brief Information</label>
               <textarea
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                id="description"
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
                 required
+                aria-required="true"
               />
             </div>
             <div className="inputfield">
-              <p>Upload File (PDF, DOC, or Image)</p>
-              <input
-                type="file"
-                onChange={handleFileChange}
-                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
-              />
+              <label htmlFor="file-upload">Upload File (PDF, DOC, or Image)</label>
+              {isUploading ? (
+                <Loader />
+              ) : (
+                <>
+                  <input
+                    id="file-upload"
+                    type="file"
+                    onChange={handleFileChange}
+                    accept=".pdf,.doc,.docx,.jpg,.jpeg,.png"
+                    disabled={isUploading || isSubmitting}
+                  />
+                  {file && <p>Selected file: {file.name}</p>}
+                </>
+              )}
             </div>
-            {/* {error && (
-              <Alert variant="destructive">
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            )} */}
+            {file && file.type.startsWith('image/') && (
+              <div className="image-preview">
+                <img src={URL.createObjectURL(file)} alt="Preview" style={{ maxWidth: '100%', maxHeight: '200px' }} />
+              </div>
+            )}
             <div className="submitbtn">
-              <button type="submit">Submit Report</button>
+              <button type="submit" disabled={isUploading || isSubmitting}>
+                {isSubmitting ? <Loader /> : 'Submit Report'}
+              </button>
             </div>
           </form>
         </div>
@@ -107,4 +257,3 @@ export const CrimeReportForm = () => {
     </div>
   );
 };
-
