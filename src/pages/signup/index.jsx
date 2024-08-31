@@ -78,7 +78,7 @@ export const Signup = () => {
 
     try {
       const response = await fetch(
-        "https://shazaib-back-1.onrender.com/imageupload",
+        "https://shazaib-back-production.up.railway.app/imageupload",
         {
           method: "POST",
           body: formData,
@@ -99,7 +99,7 @@ export const Signup = () => {
     }
   };
   const sendSignupReq = async (formresponse) => {
-    const apiurl = "https://shazaib-back-1.onrender.com/signup";
+    const apiurl = "https://shazaib-back-production.up.railway.app/signup";
     try {
       setLoading(true);
       const response = await fetch(apiurl, {

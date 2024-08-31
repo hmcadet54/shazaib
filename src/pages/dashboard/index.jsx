@@ -12,7 +12,7 @@ export const Dashboard = () => {
   const getdata = async () => {
     try {
       const id = localStorage.getItem("id");
-      const response = await fetch(`https://shazaib-back-1.onrender.com/getuser/${id}`);
+      const response = await fetch(`https://shazaib-back-production.up.railway.app/getuser/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
       }

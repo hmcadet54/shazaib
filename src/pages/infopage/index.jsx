@@ -25,7 +25,7 @@ export const CrimeReportForm = () => {
   const getdata = async () => {
     try {
       const id = localStorage.getItem("id");
-      const response = await fetch(`https://shazaib-back-1.onrender.com/getuser/${id}`);
+      const response = await fetch(`https://shazaib-back-production.up.railway.app/getuser/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch user data");
       }
@@ -58,7 +58,7 @@ export const CrimeReportForm = () => {
     formData.append('file', file);
 
     try {
-      const response = await fetch('https://shazaib-back-1.onrender.com/fileupload', {
+      const response = await fetch('https://shazaib-back-production.up.railway.app/fileupload', {
         method: 'POST',
         body: formData,
       });
@@ -80,7 +80,7 @@ export const CrimeReportForm = () => {
 
   const submitForm = useCallback(async () => {
     try {
-      const response = await fetch('https://shazaib-back-1.onrender.com/submitcrime', {
+      const response = await fetch('https://shazaib-back-production.up.railway.app/submitcrime', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

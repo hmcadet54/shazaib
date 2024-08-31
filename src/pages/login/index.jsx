@@ -16,7 +16,7 @@ export const Login = () => {
   const navigate = useNavigate();
 
   const sendloginreq = async (formresponse) => {
-    const apiurl = "https://shazaib-back-1.onrender.com/signin";
+    const apiurl = "https://shazaib-back-production.up.railway.app/signin";
     try {
       setLoading(true);
       const response = await fetch(apiurl, {
