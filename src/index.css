@@ -1,0 +1,42 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+:root
+{
+    --colorScheme: #2563EB;
+    --bgcolor:#ececec;
+    --borderColr: rgba(30, 41, 59, 0.2); 
+    --textColor:#000000;
+    --HoverColor:#1E293B;
+    --HoverColor2: 
+}
+
+
+
+
+
+@font-face {
+  font-family: satoshi;
+  src: url(./fonts/Satoshi-Variable.ttf);
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: giest;
+  src: url(./fonts/GeistVariableVF.ttf);
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+
+:root {
+  font-family: "satoshi";
+  /* font-family: "giest"; */
+}

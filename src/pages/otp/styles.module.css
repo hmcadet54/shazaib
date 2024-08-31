@@ -1,0 +1,363 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+body{
+    width: 100%; /* Ensure body takes up full width */
+    height: 100vh; /* Ensure body takes up full height */
+    border: 1px solid black;
+    color: var(--textColor);
+    background: var(--bgcolor);
+}
+
+.containerlogin {
+    width: 100%;
+    display: block;
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 2rem;
+}
+.page1
+{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 11rem;
+
+}
+.page1 h1{
+    font-size: 5rem;
+    border-bottom: 3px solid var(--colorScheme);
+    font-weight: 900;
+
+}
+.page1 p{
+    width: 50%;
+    font-size: 1.75rem;
+    margin: 0.5rem 0;
+    font-weight: 500;
+}
+.loginform form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.page2 {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.page1 {
+    /* border: 1px solid green; */
+}
+
+.page2 {
+    /* border: 1px solid blue; */
+}
+
+.page2 .loginform
+{
+    /* width: 30% ; */
+    width: 450px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--borderColr);
+    border-radius: 8px;
+    padding: 2rem 0;
+}
+.page2 .loginform h2{
+    margin: 1rem 0 0.5 0;
+    font-size: 2rem;
+    font-weight: 700;
+
+}
+
+.page2 .loginform .inputfield
+{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin: 0.5rem 0;
+    gap: 0.5rem;
+    
+}
+.page2 .loginform .inputfield p{
+    font-size: 1rem;
+    font-weight: 600;
+}
+.page2 .difauth
+{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+
+}
+.page2 .difauth button{
+
+    width: 100%;
+    padding: 0.5rem;
+    margin: 1rem 0;
+    background-color: transparent;
+    border: 1px solid var(--borderColr);
+    border-radius: 5px;
+    cursor: not-allowed;
+    color: var(--textColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+
+}
+/* .page2 .difauth button:hover{
+    background: var(--HoverColor);
+
+} */
+
+
+.page2 .loginform input[type="email"],
+.page2 .loginform input[type="text"],
+.page2 .loginform input[type="number"] {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 5px;
+    background: transparent;
+    border: 1px solid var(--borderColr);/* Set initial border to transparent */
+    outline: none;
+    color: white;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: border 0.1s ease; /* Add transition for smoother change in border color */
+
+}
+.page2 .loginform input[type="email"]:-webkit-autofill,
+.page2 .loginform input[type="text"]:-webkit-autofill,
+.page2 .loginform input[type="number"]:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 40px var(--bgcolor) inset !important;
+    -webkit-text-fill-color: var(--textColor) !important;
+}
+
+.page2 .loginform input[type="email"]:-webkit-autofill:hover,
+.page2 .loginform input[type="text"]:-webkit-autofill:hover,
+.page2 .loginform input[type="number"]:-webkit-autofill:hover,
+.page2 .loginform input[type="email"]:-webkit-autofill:focus,
+.page2 .loginform input[type="text"]:-webkit-autofill:focus,
+.page2 .loginform input[type="number"]:-webkit-autofill:focus,
+.page2 .loginform input[type="email"]:-webkit-autofill:active,
+.page2 .loginform input[type="text"]:-webkit-autofill:active,
+.page2 .loginform input[type="number"]:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px var(--bgcolor) inset !important;
+    -webkit-text-fill-color: var(--textColor) !important;
+}
+
+.demo 
+{
+    border: 1px solid red !important;
+}
+
+.page2 .loginform input[type="email"]:focus,
+.page2 .loginform input[type="text"]:focus,
+.page2 .loginform input[type="number"]:focus {
+    /* Styling for focused input fields */
+    outline:none ; /* Removing default focus outline */
+    border: 0.093rem solid var(--colorScheme) ; /* Adjust border color for focus */
+}
+.inputerror input[type="email"],
+.inputerror input[type="text"],
+.inputerror input[type="number"] {
+    border: 1px solid red;
+}
+
+.ErrorMessage 
+{
+    color: red !important;
+    font-size: 0.8rem !important;
+    font-weight: 400 !important;
+}
+
+
+
+
+.page2 .loginform .submitbtn,
+.page2 .loginform .LoadingButton
+{
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0;
+
+}
+
+
+.page2 .loginform .submitbtn button
+{
+    width: 100%;
+    padding: 0.8rem;
+    margin: 1rem 0;
+    background-color: var(--colorScheme);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--textColor);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    
+}
+.page2 .loginform .LoadingButton button
+{
+    width: 100%;
+    padding: 0.8rem;
+    margin: 1rem 0;
+    background-color: var(--colorScheme);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: var(--textColor);
+    opacity: 0.5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.haveanAcount
+{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    text-align: right;
+    margin-top: -1.5rem;
+}
+.haveanAcount p
+{
+    width: 70%;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+.haveanAcount p a
+{
+    color: var(--colorScheme);
+    font-weight: 600;
+    text-decoration: none;
+}
+.haveanAcount p a:hover
+{
+    color: var(--colorScheme);
+    font-weight: 600;
+    text-decoration: underline;
+}
+/* @media screen and (max-width: px) */
+
+
+@media screen and (max-width: 1000px)
+{
+    .containerlogin
+    {
+       width: 100%;
+       height: 100vh;
+         display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 3rem;
+    }
+    .page1{
+        width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 0rem;
+    /* border: 1px solid red; */
+    }
+    .page1 h1{
+        font-size: 3rem;
+        border-bottom: 3px solid var(--colorScheme);
+    }
+    .page1 p 
+    {
+        display: none;
+    }.page2
+    {
+        /* border: 1px solid red; */
+        /* padding: 0; */
+        height: auto;
+    }
+    .page2 .loginform
+    {
+        width: 100%;
+        height: auto;
+    }
+    .page2 .loginform p 
+    {
+        font-size: 0.8rem;
+    }
+    .page2 .loginform h2{
+        margin: 1rem 0 0.5 0;
+        font-size: 1.5rem;
+    
+    }
+    .page2 .loginform .inputfield
+    {
+        width: 80%;
+    }
+    .page2 .loginform .inputfield p{
+        font-size: 0.9rem;
+        font-weight: 600;
+    }
+    .page2 .loginform .submitbtn
+    {
+        width: 80%;
+    }
+    .page2 .loginform .LoadingButton
+    {
+        width: 80%;
+    
+    }
+
+
+    .page2 .difauth
+    {
+        width: 70%;
+    }
+    .haveanAcount p
+    {
+        width: 80%;
+        font-size: 0.8rem;
+    }
+}
