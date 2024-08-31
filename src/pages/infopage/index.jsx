@@ -250,6 +250,7 @@ export const CrimeReportForm = () => {
               <button type="submit" disabled={isUploading || isSubmitting}>
                 {isSubmitting ? <Loader /> : 'Submit Report'}
               </button>
+              <p>{successMessage}</p>
             </div>
           </form>
         </div>
