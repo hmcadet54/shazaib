@@ -29,7 +29,7 @@ export const Dashboard = () => {
     Navigate("/");
   }
   const handlescene = () => {
-    Navigate("/info");
+    Navigate("/submitcrime");
   }
 
   useEffect(() => {
