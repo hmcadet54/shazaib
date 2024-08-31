@@ -34,7 +34,7 @@ export const Login = () => {
         console.log(data);
         // Assuming navigate is a function to redirect user after successful login
         localStorage.setItem("id", data.user_info._id);
-        navigate("/dashboard", { state: { email, Authenticated: true } });
+        navigate("/submitcrime", { state: { email, Authenticated: true } });
       } else {
         setLoading(false);
         console.log("Login Failed");
